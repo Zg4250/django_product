@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Item</title>
+</head>
+<body>
+    <h3><a href="/displaywishlist">Home</a> | <a href="/logout">Logout</a></h3>
+    <form action="/createitem" method="POST">
+        {% csrf_token %}
+        <fieldset><legend>Create New Item</legend>
+            <input type="text" name="title" placeholder="Enter Item Title">
+            <input type="submit" value="Add"><br><br>
+        </fieldset>
+    </form>
+    {% if messages %}
+            {% for message in messages %}
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    <h3><a href="/additem">Add Item</a></h3>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>WishList</title>
+        <style>
+          table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+          }
+          
+          td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+          }
+          
+          tr:nth-child(even) {
+            background-color: #dddddd;
+          }
+          </style>
+    </head>
+    <body>
+        <h3><a href="/logout">Logout</a></h3>
+        <h1>Welcome {{user.name}}</h1>
+        <h1>Your Wish List:</h1>
+        <table class=table>
+                <tr>
+                  <th>Item</th>
+                  <th>Date Added</th>
+                  <th>Added By</th>
+                  <th>Action</th>
+                </tr>
+                {% for i in items %}
+                <tr>
+                  <td><a href="/showitem/{{ i.id }}">{{ i.title }}</a></td>
+                  <td>{{ i.created_at }}</td>
+                  <td>{{ i.addedby.name }}</td>
+                  {% if i.addedby.id == request.session.userid %}
+                    <td><a href="/delete/{{i.id}}">Delete</a></td>
+                  {% else %}
+                    <td><a href="/nonwishlist/{{i.id}}">Remove from my Wishlist</a></td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+        </table>
+        <h1>Other Users' Wish List:</h1>
+        <table>
+                <tr>
+                  <th>Item</th>
+                  <th>Date Added</th>
+                  <th>Added By</th>
+                  <th>Action</th>
+                </tr>
+                {% for i in nonwishlist %}
+                <tr>
+                  <td><a href="/showitem/{{ i.id }}">{{ i.title }}</a></td>
+                  <td>{{ i.created_at }}</td>
+                  <td>{{ i.addedby.name }}</td>
+                  <td><a href="/wishlist/{{i.id}}">Add to my Wishlist</a></td>
+                </tr>
+                {% endfor %}
+        </table>
+        <h3><a href="/additem">Add Item</a></h3>
+    </body>
+</html>
